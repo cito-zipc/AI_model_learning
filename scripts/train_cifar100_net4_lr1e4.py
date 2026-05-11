@@ -5,6 +5,7 @@
 import torch
 import torch.nn as nn
 from torch import optim
+from pathlib import Path
 
 from common.datasets import create_cifar_dataloaders
 from common.paths import CHECKPOINTS_DIR, FIGURES_DIR, PROJECT_ROOT
@@ -128,8 +129,12 @@ def train_model():
 # ====================================================================
 
 if __name__ == "__main__":
-    checkpoint_path = CHECKPOINTS_DIR / "net4_cifar100_lr1e4_checkpoint.pt"
-    legacy_checkpoint_path = PROJECT_ROOT / "results" / "net4_cifar100_lr1e4_checkpoint.pt"
+    # スクリプト名から自動的に名前を生成
+    script_name = Path(__file__).stem  # train_cifar100_net4_lr1e4
+    name_suffix = script_name.replace('train_', '')  # cifar100_net4_lr1e4
+    
+    checkpoint_path = CHECKPOINTS_DIR / f"{name_suffix}_checkpoint.pt"
+    legacy_checkpoint_path = PROJECT_ROOT / "results" / f"{name_suffix}_checkpoint.pt"
 
     if (not checkpoint_path.exists()) and legacy_checkpoint_path.exists():
         print(f"旧チェックポイントを移行します: {legacy_checkpoint_path} -> {checkpoint_path}")
@@ -149,7 +154,7 @@ if __name__ == "__main__":
 
     # 結果出力
     print("\n学習結果を表示します...")
-    plot_loss_curve(record_loss_train, record_loss_test, save_path=FIGURES_DIR / "net4_cifar100_lr1e4_loss_curve.png")
+    plot_loss_curve(record_loss_train, record_loss_test, save_path=FIGURES_DIR / f"{name_suffix}.png")
     
     metrics = calculate_accuracy(net, test_loader_100, num_classes=100)
     print(f"accuracy : {metrics['accuracy']:.4f}")

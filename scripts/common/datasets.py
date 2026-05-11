@@ -10,8 +10,13 @@ def build_cifar_transforms():
     affine = transforms.RandomAffine([-30, 30], scale=(0.8, 1.2))
     shift = transforms.RandomAffine((0, 0), translate=(0.5, 0.5))
     flip = transforms.RandomHorizontalFlip(p=0.5)
-    erasing = transforms.RandomErasing(p=0.5)
-    normalize = transforms.Normalize((0.0, 0.0, 0.0), (1.0, 1.0, 1.0))
+    # erasing = transforms.RandomErasing(p=0.5)
+    erasing = transforms.RandomErasing(p=0.4)
+    # normalize = transforms.Normalize((0.0, 0.0, 0.0), (1.0, 1.0, 1.0))
+    normalize = transforms.Normalize(
+    mean=(0.5071, 0.4867, 0.4408),
+    std=(0.2675, 0.2565, 0.2761),
+)
     to_tensor = transforms.ToTensor()
 
     transform_train = transforms.Compose([to_tensor, normalize])

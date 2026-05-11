@@ -18,11 +18,10 @@ from common.training import (
 
 
 BATCH_SIZE = 64
-NUM_EPOCHS = 50
-LEARNING_RATE = 1e-2
+NUM_EPOCHS = 100
 
 dataloaders = create_cifar_dataloaders(batch_size=BATCH_SIZE)
-train_loader_random_100 = dataloaders["train_loader_random_100"]
+train_loader_erasing_100 = dataloaders["train_loader_erasing_100"]
 test_loader_100 = dataloaders["test_loader_100"]
 
 
@@ -72,13 +71,13 @@ class Net4(nn.Module):
 
 
 # ====================================================================
-# 学習率を小さくして学習
+# ノイズを小さくして学習
 # ====================================================================
 # - データセット：CIFAR100
-# - 前処理：複数ノイズをランダム付与
+# - 前処理：erasing（Normalize最適化、erasing率0.4）
 # - モデル：Net4（Conv: 3→32→64, カーネル3x3, FC: 64x6x6→256→100, クラス数100）
-# - エポック数：50
-# - 学習率：0.01
+# - エポック数：100
+# - 学習率：0.0001
 
 def train_model():
     """モデルを訓練"""
@@ -86,7 +85,7 @@ def train_model():
     net.cuda()  # GPU対応
 
     loss_fnc = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(net.parameters(), lr=LEARNING_RATE)
+    optimizer = optim.Adam(net.parameters())
 
     record_loss_train = []
     record_loss_test = []
@@ -95,7 +94,7 @@ def train_model():
         net.train()  # 訓練モード
         loss_train = 0
         
-        for j, (x, t) in enumerate(train_loader_random_100):
+        for j, (x, t) in enumerate(train_loader_erasing_100):
             x, t = x.cuda(), t.cuda()
             y = net(x)
             loss = loss_fnc(y, t)
@@ -130,8 +129,8 @@ def train_model():
 
 if __name__ == "__main__":
     # スクリプト名から自動的に名前を生成
-    script_name = Path(__file__).stem  # train_cifar100_net4_lr1e2
-    name_suffix = script_name.replace('train_', '')  # cifar100_net4_lr1e2
+    script_name = Path(__file__).stem  # train_cifar100_net4_erasing_epoch100
+    name_suffix = script_name.replace('train_', '')  # cifar100_net4_erasing_epoch100
     
     checkpoint_path = CHECKPOINTS_DIR / f"{name_suffix}_checkpoint.pt"
     legacy_checkpoint_path = PROJECT_ROOT / "results" / f"{name_suffix}_checkpoint.pt"
