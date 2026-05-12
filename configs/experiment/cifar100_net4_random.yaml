@@ -3,12 +3,12 @@ defaults:
   - override /data: cifar100
   - override /model: cifar100_net4
 
-experiment_name: cifar100_net4_random_lr1e2
+experiment_name: cifar100_net4_random
 
 
 logger:
   tensorboard:
-    name: cifar100_net4_random_lr1e2   
+    name: cifar100_net4_random   
 
 
 data:
