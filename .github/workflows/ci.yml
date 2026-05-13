@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dev tools
+        run: pip install ".[dev]"
+
+      - name: Run Ruff (Lint & Format check)
+        run: ruff format --check src/
+
+      - name: Run Ruff (Lint check)
+        run: ruff check src/
+
+      - name: Run mypy (Type check)
+        run: mypy
