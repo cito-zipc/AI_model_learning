@@ -1,0 +1,15 @@
+# @package _global_
+defaults:
+  - override /data: cifar100
+  - override /model: cifar100_net4
+
+experiment_name: cifar100_net4_crop
+
+
+logger:
+  tensorboard:
+    name: cifar100_net4_crop   
+
+data:
+  use_crop: true
+tags: ["cifar100", "net4", "crop"]

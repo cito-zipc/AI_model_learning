@@ -1,0 +1,16 @@
+# @package _global_
+defaults:
+  - override /data: cifar100
+  - override /model: cifar100_net5
+
+net:
+  _target_: src.models.components.net5.Net5
+
+experiment_name: cifar100_net5
+
+logger:
+  tensorboard:
+    name: cifar100_net5   
+
+tags: ["cifar100", "net5"]
+

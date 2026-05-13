@@ -16,6 +16,7 @@ def build_cifar_transforms():
     std=(0.2675, 0.2565, 0.2761),
 )
     to_tensor = transforms.ToTensor()
+    crop = transforms.RandomCrop(32, padding=4)
 
     transform_train = transforms.Compose([to_tensor, normalize])
     transform_train_erasing = transforms.Compose([to_tensor, erasing, normalize])
@@ -27,12 +28,19 @@ def build_cifar_transforms():
         transforms.RandomApply([erasing], p=0.5),
         normalize,
     ])
+    transform_train_crop = transforms.Compose([
+    crop,
+    flip,
+    to_tensor,
+    normalize,
+])
     transform_test = transforms.Compose([to_tensor, normalize])
 
     return {
         "train": transform_train,
         "train_erasing": transform_train_erasing,
         "train_random": transform_train_random,
+        "train_crop": transform_train_crop,
         "test": transform_test,
     }
 
@@ -49,6 +57,7 @@ def create_cifar_datasets(data_dir="data/", transforms_map=None):
         "cifar100_train": CIFAR100(str(data_dir), train=True, download=True, transform=transforms_map["train"]),
         "cifar100_train_erasing": CIFAR100(str(data_dir), train=True, download=True, transform=transforms_map["train_erasing"]),
         "cifar100_train_random": CIFAR100(str(data_dir), train=True, download=True, transform=transforms_map["train_random"]),
+        "cifar100_train_crop": CIFAR100(str(data_dir), train=True, download=True, transform=transforms_map["train_crop"]),
         "cifar100_test": CIFAR100(str(data_dir), train=False, download=True, transform=transforms_map["test"]),
     }
 

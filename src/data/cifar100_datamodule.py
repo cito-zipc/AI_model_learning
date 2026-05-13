@@ -10,7 +10,8 @@ class CIFAR100DataModule(LightningDataModule):
         batch_size: int = 64,
         use_erasing: bool = False,
         use_random: bool = False,
-        num_workers: int = 0,
+        use_crop: bool = False,
+        num_workers: int = 8,
     ):
         super().__init__()
         self.save_hyperparameters()
@@ -18,6 +19,7 @@ class CIFAR100DataModule(LightningDataModule):
         self.batch_size = batch_size
         self.use_erasing = use_erasing
         self.use_random = use_random
+        self.use_crop = use_crop
         self.num_workers = num_workers
 
     def setup(self, stage=None):
@@ -30,6 +32,8 @@ class CIFAR100DataModule(LightningDataModule):
             self.train_dataset = datasets["cifar100_train_random"]
         elif self.use_erasing:
             self.train_dataset = datasets["cifar100_train_erasing"]
+        elif self.use_crop:
+            self.train_dataset = datasets["cifar100_train_crop"]
         else:
             self.train_dataset = datasets["cifar100_train"]
         self.test_dataset = datasets["cifar100_test"]
