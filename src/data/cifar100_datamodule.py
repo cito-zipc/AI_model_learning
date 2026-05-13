@@ -1,6 +1,7 @@
-from torch.utils.data import DataLoader
 from lightning import LightningDataModule
-from .datasets import create_cifar_datasets, build_cifar_transforms
+from torch.utils.data import DataLoader
+
+from .datasets import build_cifar_transforms, create_cifar_datasets
 
 
 class CIFAR100DataModule(LightningDataModule):
@@ -26,7 +27,7 @@ class CIFAR100DataModule(LightningDataModule):
         tfm = build_cifar_transforms()  # transforms_mapは使わず内部で生成
         datasets = create_cifar_datasets(
             data_dir=self.data_dir,
-            transforms_map=tfm  # build済みのtfmをそのまま渡す
+            transforms_map=tfm,  # build済みのtfmをそのまま渡す
         )
         if self.use_random:
             self.train_dataset = datasets["cifar100_train_random"]
@@ -39,10 +40,25 @@ class CIFAR100DataModule(LightningDataModule):
         self.test_dataset = datasets["cifar100_test"]
 
     def train_dataloader(self):
-        return DataLoader(self.train_dataset, batch_size=self.batch_size, shuffle=True, num_workers=self.num_workers)
+        return DataLoader(
+            self.train_dataset,
+            batch_size=self.batch_size,
+            shuffle=True,
+            num_workers=self.num_workers,
+        )
 
     def val_dataloader(self):
-        return DataLoader(self.test_dataset, batch_size=self.batch_size, shuffle=False, num_workers=self.num_workers)
+        return DataLoader(
+            self.test_dataset,
+            batch_size=self.batch_size,
+            shuffle=False,
+            num_workers=self.num_workers,
+        )
 
     def test_dataloader(self):
-        return DataLoader(self.test_dataset, batch_size=self.batch_size, shuffle=False, num_workers=self.num_workers)
+        return DataLoader(
+            self.test_dataset,
+            batch_size=self.batch_size,
+            shuffle=False,
+            num_workers=self.num_workers,
+        )
