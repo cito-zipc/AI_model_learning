@@ -1,0 +1,19 @@
+# @package _global_
+defaults:
+  - override /data: cifar100
+  - override /model: cifar100_alexnet
+
+optimizer:
+  _target_: torch.optim.SGD
+  _partial_: true
+  lr: 0.01
+  momentum: 0.9
+  weight_decay: 5e-4
+
+experiment_name: cifar100_alexnet_sgd
+
+logger:
+  tensorboard:
+    name: cifar100_alexnet_sgd
+
+tags: ["cifar100", "alexnet", "sgd"]

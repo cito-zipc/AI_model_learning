@@ -1,0 +1,15 @@
+# @package _global_
+defaults:
+  - override /data: cifar100
+  - override /model: cifar100_alexnet
+
+data:
+  use_crop: true
+
+experiment_name: cifar100_alexnet_crop
+
+logger:
+  tensorboard:
+    name: cifar100_alexnet_crop
+
+tags: ["cifar100", "alexnet", "crop"]

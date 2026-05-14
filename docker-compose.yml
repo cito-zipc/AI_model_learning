@@ -1,0 +1,30 @@
+services:
+  train:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ai-model-learning:latest
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+    shm_size: '8gb'
+
+    environment:
+      - PYTHONPATH=/app
+      - PROJECT_ROOT=/app
+
+    volumes:
+      - ./src:/app/src
+      - ./configs:/app/configs
+      - ./data:/app/data
+      - ./outputs:/app/outputs
+      - ./logs:/app/logs
+      - ./mlruns:/app/mlruns
+
+    command: ["python", "src/train.py"]

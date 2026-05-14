@@ -1,0 +1,12 @@
+# @package _global_
+defaults:
+  - override /data: cifar100
+  - override /model: cifar100_alexnet
+
+experiment_name: cifar100_alexnet
+
+logger:
+  tensorboard:
+    name: cifar100_alexnet
+
+tags: ["cifar100", "alexnet"]
