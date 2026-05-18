@@ -1,0 +1,14 @@
+# @package _global_
+defaults:
+  - override /data: cifar100
+  - override /model: cifar100_vit
+
+net:
+  _target_: src.models.components.vision_transformer.VisionTransformer
+
+experiment_name: cifar100_vit_random
+
+data:
+  use_random: true
+tags: ["cifar100", "vit", "random"]
+

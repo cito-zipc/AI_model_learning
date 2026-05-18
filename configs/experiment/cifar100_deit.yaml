@@ -1,0 +1,8 @@
+# @package _global_
+defaults:
+  - override /data: cifar100
+  - override /model: cifar100_deit
+
+experiment_name: cifar100_deit
+
+tags: ["cifar100", "deit"]

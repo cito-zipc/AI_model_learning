@@ -1,0 +1,20 @@
+_target_: src.models.cifar100_module.CIFAR100LitModule
+net:
+  _target_: src.models.components.vision_transformer.VisionTransformer
+  model_name: deit_tiny_patch16_224
+  num_classes: 100
+  freeze_backbone: false
+optimizer:
+  _target_: torch.optim.AdamW
+  _partial_: true
+  lr: 0.00005
+  weight_decay: 0.01
+
+scheduler:
+  _target_: torch.optim.lr_scheduler.ReduceLROnPlateau
+  _partial_: true
+  mode: min
+  factor: 0.1
+  patience: 10
+
+compile: false

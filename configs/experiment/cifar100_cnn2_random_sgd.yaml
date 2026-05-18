@@ -1,0 +1,23 @@
+# @package _global_
+defaults:
+  - override /data: cifar100
+  - override /model: cifar100_cnn2
+
+optimizer:
+  _target_: torch.optim.SGD
+  _partial_: True
+  lr: 0.1
+  momentum: 0.9
+  weight_decay: 5e-4
+
+experiment_name: cifar100_cnn2_random_sgd
+
+
+logger:
+  tensorboard:
+    name: cifar100_cnn2_random_sgd   
+
+
+data:
+  use_random: true
+tags: ["cifar100", "cnn2", "random"]

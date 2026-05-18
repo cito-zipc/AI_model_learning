@@ -30,20 +30,20 @@ pip install -r requirements.txt
 ### 基本実行（デフォルト設定）
 
 ```bash
-python src/train.py experiment=cifar100_net4
+python src/train.py experiment=cifar100_cnn2
 ```
 
 ### オーバーライド例
 
 ```bash
 # エポック数を変更
-python src/train.py experiment=cifar100_net4 trainer.max_epochs=50
+python src/train.py experiment=cifar100_cnn2 trainer.max_epochs=50
 
 # GPU を使用
-python src/train.py experiment=cifar100_net4 trainer=gpu
+python src/train.py experiment=cifar100_cnn2 trainer=gpu
 
 # テストのみ実行
-python src/train.py experiment=cifar100_net4 train=False test=True
+python src/train.py experiment=cifar100_cnn2 train=False test=True
 ```
 
 ## MLflow の起動方法

@@ -25,3 +25,5 @@ test: True
 
 experiment_name: default 
 task_name: train
+
+ckpt_path: null

@@ -1,0 +1,16 @@
+# @package _global_
+defaults:
+  - override /data: cifar100
+  - override /model: cifar100_cnn3
+
+net:
+  _target_: src.models.components.cnn3.Net5
+
+experiment_name: cifar100_cnn3
+
+logger:
+  tensorboard:
+    name: cifar100_cnn3   
+
+tags: ["cifar100", "cnn3"]
+
