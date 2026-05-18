@@ -4,7 +4,7 @@ net:
   model_name: deit_tiny_patch16_224
   num_classes: 100
   image_size: 32
-  pretrained: false
+  pretrained: true
   freeze_backbone: false
 optimizer:
   _target_: torch.optim.AdamW

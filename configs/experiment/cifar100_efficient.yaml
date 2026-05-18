@@ -1,0 +1,13 @@
+# @package _global_
+defaults:
+  - override /data: cifar100
+  - override /model: cifar100_efficient
+
+net:
+  _target_: src.models.components.efficientnet.EfficientNet
+
+experiment_name: cifar100_efficient
+
+
+tags: ["cifar100", "efficientnet"]
+

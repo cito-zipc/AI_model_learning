@@ -8,20 +8,19 @@ class EfficientNet(nn.Module):
         self,
         model_name: str = "efficientnet_b2",
         num_classes: int = 100,
-        image_size: int = 32,
-        patch_size: int = 2,
-        pretrained: bool = False,
+        input_size: tuple = (32, 32),
+        pretrained: bool = True,
         freeze_backbone: bool = False,
     ):
         super().__init__()
+        self.input_size = input_size
 
         self.efficientnet = timm.create_model(
             model_name,
             pretrained=pretrained,
             num_classes=num_classes,
-            img_size=image_size,
-            patch_size=patch_size,
         )
+        self.efficientnet.conv_stem.stride = (1, 1)
 
         if freeze_backbone:
             for name, param in self.efficientnet.named_parameters():
@@ -30,3 +29,6 @@ class EfficientNet(nn.Module):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         return self.efficientnet(x)
+
+    def set_input_size(self, size: tuple) -> None:
+        self.input_size = size

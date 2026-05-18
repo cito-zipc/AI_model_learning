@@ -3,7 +3,6 @@ net:
   _target_: src.models.components.efficientnet.EfficientNet
   model_name: efficientnet_b2
   num_classes: 100
-  image_size: 32
   pretrained: false
   freeze_backbone: false
 optimizer:

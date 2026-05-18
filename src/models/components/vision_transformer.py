@@ -10,7 +10,7 @@ class VisionTransformer(nn.Module):
         num_classes: int = 100,
         image_size: int = 32,
         patch_size: int = 2,
-        pretrained: bool = False,
+        pretrained: bool = True,
         freeze_backbone: bool = False,
     ):
         super().__init__()
